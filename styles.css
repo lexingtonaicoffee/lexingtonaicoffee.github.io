@@ -1,0 +1,409 @@
+/* Claude & Coffee — see SPEC.md for the visual system. */
+
+:root {
+  --kraft: #F3ECE0;
+  --milk: #FBF7F1;
+  --espresso: #2A1C14;
+  --roast: #6B4A36;
+  --crema: #E7C9A0;
+  --clay: #C4673F;
+
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --space-section: clamp(3.5rem, 9vw, 6.5rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--kraft);
+  /* Faint kraft-paper mottling. */
+  background-image:
+    radial-gradient(circle at 18% 12%, rgb(107 74 54 / 0.05), transparent 40%),
+    radial-gradient(circle at 85% 70%, rgb(107 74 54 / 0.04), transparent 45%);
+  background-attachment: fixed;
+  color: var(--espresso);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+.wordmark,
+.board-date {
+  font-family: var(--display);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  letter-spacing: -0.01em;
+  max-width: 18ch;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin: 0;
+  max-width: 65ch;
+}
+
+a {
+  color: var(--espresso);
+  text-decoration-color: var(--clay);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-thickness: 3px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--clay);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1040px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Header */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding-block: 1.25rem;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.375rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.wordmark-mark {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: none;
+  color: var(--roast);
+}
+
+.header-link {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Hero + menu board */
+
+.hero {
+  display: grid;
+  gap: 2rem;
+  padding-top: clamp(2rem, 6vw, 4.5rem);
+}
+
+.board {
+  position: relative;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  background-color: var(--espresso);
+  background-image: radial-gradient(ellipse at 30% 20%, rgb(107 74 54 / 0.35), transparent 70%);
+  color: var(--milk);
+  border: 10px solid var(--roast);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 0 1px rgb(231 201 160 / 0.25),
+    inset 0 2px 14px rgb(0 0 0 / 0.45),
+    0 14px 30px -12px rgb(42 28 20 / 0.45);
+  animation: board-settle 700ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+/* Inner chalk line, like a framed chalkboard. */
+.board::before {
+  content: "";
+  position: absolute;
+  inset: 0.5rem;
+  border: 1px solid rgb(231 201 160 / 0.3);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.board-heading {
+  font-size: 1.125rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--crema);
+  margin-bottom: 0.25rem;
+}
+
+.board-date {
+  font-size: clamp(2.25rem, 8vw, 3.25rem);
+  font-weight: 600;
+  color: var(--crema);
+  max-width: none;
+}
+
+.board-details {
+  margin: 1.5rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px dashed rgb(231 201 160 / 0.45);
+  display: grid;
+  gap: 0.875rem;
+}
+
+.board-row {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.board-details dt {
+  font-size: 0.875rem;
+  color: var(--crema);
+}
+
+.board-details dd {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.board-address {
+  display: block;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--crema);
+}
+
+.board-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.board :focus-visible {
+  outline-color: var(--crema);
+}
+
+.schedule-note {
+  color: var(--roast);
+}
+
+@keyframes board-settle {
+  from {
+    opacity: 0;
+    transform: translateY(10px) rotate(-0.6deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Buttons */
+
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid var(--clay);
+  border-radius: 999px;
+  background: var(--clay);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--espresso);
+  border-color: var(--espresso);
+}
+
+.board .button:hover {
+  background: var(--milk);
+  border-color: var(--milk);
+  color: var(--espresso);
+}
+
+.button-outline {
+  background: transparent;
+  border-color: var(--crema);
+  color: var(--milk);
+}
+
+/* Sections */
+
+.about,
+.signup,
+.past {
+  margin-top: var(--space-section);
+}
+
+/* Signup */
+
+.signup-form {
+  display: grid;
+  gap: 1rem;
+  max-width: 26rem;
+  margin-top: 1.25rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.field label {
+  font-weight: 600;
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--roast);
+}
+
+.field input {
+  width: 100%;
+  padding: 0.75rem 0.875rem;
+  background: var(--milk);
+  color: var(--espresso);
+  border: 1.5px solid var(--roast);
+  border-radius: 6px;
+  font: inherit;
+}
+
+.field input:focus-visible {
+  outline-offset: 1px;
+}
+
+.signup-form .button {
+  justify-self: start;
+}
+
+.signup-thanks {
+  display: none;
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  background: var(--milk);
+  border-left: 4px solid var(--clay);
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.signup-thanks:target {
+  display: block;
+}
+
+/* Past meetups */
+
+.past-list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  max-width: 65ch;
+}
+
+.past-list li {
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--crema);
+}
+
+.past-date {
+  font-weight: 600;
+}
+
+/* Footer */
+
+.site-footer {
+  margin-top: var(--space-section);
+  padding-block: 2rem 2.5rem;
+  border-top: 1px solid var(--crema);
+  display: grid;
+  gap: 0.5rem;
+  color: var(--roast);
+  font-size: 0.9375rem;
+}
+
+.disclaimer {
+  color: var(--espresso);
+}
+
+/* Wide screens: description left, menu board right. */
+
+@media (min-width: 800px) {
+  .hero {
+    grid-template-columns: 1fr minmax(0, 27rem);
+    column-gap: 3rem;
+    row-gap: 1.5rem;
+  }
+
+  .hero-intro {
+    grid-column: 1;
+    align-self: end;
+  }
+
+  .board {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .schedule-note {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+  }
+
+  .board-row {
+    grid-template-columns: 6.5rem 1fr;
+    gap: 1rem;
+  }
+
+  .board-details dt {
+    padding-top: 0.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board {
+    animation: none;
+  }
+}
