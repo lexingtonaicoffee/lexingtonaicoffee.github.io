@@ -4,12 +4,13 @@ PRODID:-//Claude & Coffee//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VEVENT
-UID:claude-coffee-2026-10-16@claudeandcoffee
-DTSTAMP:20261010T020748Z
-DTSTART:20261016T133000Z
-DTEND:20261016T150000Z
+UID:claude-coffee-2026-11-06@claudeandcoffee
+DTSTAMP:20261103T210233Z
+DTSTART:20261106T143000Z
+DTEND:20261106T160000Z
 SUMMARY:Claude & Coffee
-LOCATION:Manchester Coffee Co.\, 576 E Third St\, Lexington\, KY 40508
-DESCRIPTION:Guest hosts: Keith McMunn & Jason Mize\, Stellar TechWorks
+LOCATION:Awesome Inc\, 348 E Main St\, Lexington\, KY 40507
+DESCRIPTION:A morning meetup in Lexington for people putting Claude to work.
+URL:https://lexingtonaicoffee.com/
 END:VEVENT
 END:VCALENDAR

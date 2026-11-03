@@ -8,19 +8,21 @@
   <meta name="theme-color" content="#F3ECE0">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-  <!-- Open Graph / Twitter. Once the site has a domain, make og:image and og:url absolute
-       (e.g. https://example.com/assets/og-image.png); some sites ignore relative image URLs. -->
+  <link rel="canonical" href="https://lexingtonaicoffee.com/">
+
+  <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lexingtonaicoffee.com/">
   <meta property="og:title" content="Claude &amp; Coffee · Lexington, KY">
   <meta property="og:description" content="A twice-monthly morning meetup in Lexington for people putting Claude to work.">
-  <meta property="og:image" content="assets/og-image.png">
+  <meta property="og:image" content="https://lexingtonaicoffee.com/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Claude &amp; Coffee: a morning meetup in Lexington, KY">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Claude &amp; Coffee · Lexington, KY">
   <meta name="twitter:description" content="A twice-monthly morning meetup in Lexington for people putting Claude to work.">
-  <meta name="twitter:image" content="assets/og-image.png">
+  <meta name="twitter:image" content="https://lexingtonaicoffee.com/assets/og-image.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,28 +35,24 @@
     "@context": "https://schema.org",
     "@type": "Event",
     "name": "Claude & Coffee",
-    "description": "A morning meetup in Lexington for people putting Claude to work. Guest hosts: Keith McMunn & Jason Mize, Stellar TechWorks.",
-    "startDate": "2026-10-16T09:30:00-04:00",
-    "endDate": "2026-10-16T11:00:00-04:00",
+    "description": "A morning meetup in Lexington for people putting Claude to work.",
+    "startDate": "2026-11-06T09:30:00-05:00",
+    "endDate": "2026-11-06T11:00:00-05:00",
     "eventStatus": "https://schema.org/EventScheduled",
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     "location": {
       "@type": "Place",
-      "name": "Manchester Coffee Co.",
+      "name": "Awesome Inc",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "576 E Third St",
+        "streetAddress": "348 E Main St",
         "addressLocality": "Lexington",
         "addressRegion": "KY",
-        "postalCode": "40508",
+        "postalCode": "40507",
         "addressCountry": "US"
       }
     },
-    "performer": [
-      { "@type": "Person", "name": "Keith McMunn" },
-      { "@type": "Person", "name": "Jason Mize" }
-    ],
-    "organizer": { "@type": "Organization", "name": "Claude & Coffee" }
+    "organizer": { "@type": "Organization", "name": "Claude & Coffee", "url": "https://lexingtonaicoffee.com/" }
   }
   </script>
 </head>
@@ -73,7 +71,8 @@
       </svg>
       Claude &amp; Coffee
     </a>
-    <a class="header-link" href="#signup">Get notified</a>
+    <!-- Hidden until the signup form has a Formspree or HubSpot ID; remove "hidden" to show. -->
+    <a class="header-link" href="#signup" hidden>Get notified</a>
   </header>
 
   <main>
@@ -85,7 +84,7 @@
       <!-- NEXT MEETUP: START -->
       <article class="board" aria-labelledby="next-heading">
         <h2 id="next-heading" class="board-heading">Next meetup</h2>
-        <p class="board-date"><time datetime="2026-10-16T09:30-04:00">Friday, October 16</time></p>
+        <p class="board-date"><time datetime="2026-11-06T09:30-05:00">Friday, November 6</time></p>
         <dl class="board-details">
           <div class="board-row">
             <dt>Time</dt>
@@ -94,19 +93,20 @@
           <div class="board-row">
             <dt>Where</dt>
             <dd>
-              Manchester Coffee Co.
-              <span class="board-address">576 E Third St, Lexington, KY 40508</span>
+              Awesome Inc
+              <span class="board-address">348 E Main St, Lexington, KY 40507</span>
             </dd>
           </div>
-          <!-- Guest hosts row: delete this whole <div> when there are no guest hosts. -->
+          <!-- Guest hosts row (only when there are guest hosts):
           <div class="board-row">
             <dt>Guest hosts</dt>
-            <dd>Keith McMunn &amp; Jason Mize, Stellar TechWorks</dd>
+            <dd>Name &amp; Name, Company</dd>
           </div>
+          -->
         </dl>
         <div class="board-actions">
           <a class="button" href="next-meetup.ics">Add to calendar</a>
-          <a class="button button-outline" href="https://www.google.com/maps/search/?api=1&amp;query=Manchester+Coffee+Co.%2C+576+E+Third+St%2C+Lexington%2C+KY+40508">Get directions</a>
+          <a class="button button-outline" href="https://www.google.com/maps/search/?api=1&amp;query=Awesome+Inc%2C+348+E+Main+St%2C+Lexington%2C+KY+40507">Get directions</a>
         </div>
       </article>
       <!-- NEXT MEETUP: END -->
@@ -135,8 +135,11 @@
       or keep this markup and change the action to
       https://forms.hubspot.com/uploads/form/v2/{portalId}/{formId}
       Keep the site's own field and button styling either way.
+
+      Hidden until the form has an ID: remove "hidden" from this section and from the
+      "Get notified" link in the header.
     -->
-    <section id="signup" class="signup wrap" aria-labelledby="signup-heading">
+    <section id="signup" class="signup wrap" aria-labelledby="signup-heading" hidden>
       <h2 id="signup-heading">Get notified about upcoming meetups</h2>
       <p id="thanks" class="signup-thanks" role="status">You’re on the list. See you at the next one.</p>
       <form class="signup-form" action="https://formspree.io/f/FORM_ID" method="POST">
@@ -148,7 +151,7 @@
           <label for="first-name">First name <span class="optional">(optional)</span></label>
           <input id="first-name" name="first_name" type="text" autocomplete="given-name">
         </div>
-        <!-- <input type="hidden" name="_next" value="https://YOUR-DOMAIN/#thanks"> -->
+        <!-- <input type="hidden" name="_next" value="https://lexingtonaicoffee.com/#thanks"> -->
         <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button class="button" type="submit">Notify me</button>
       </form>
@@ -172,8 +175,7 @@
   <!-- FOOTER: START -->
   <footer class="site-footer wrap">
     <p class="disclaimer">Claude &amp; Coffee is an independent community meetup. It is not affiliated with, sponsored by, or endorsed by Anthropic. Claude is a trademark of Anthropic, PBC.</p>
-    <!-- Contact: replace the placeholder email with Nick's address or LinkedIn URL. -->
-    <p>Questions or want to guest host? <a href="mailto:hello@example.com">Get in touch with Nick</a>.</p>
+    <p>Questions or want to guest host? Email <a href="mailto:hello@lexingtonaicoffee.com">hello@lexingtonaicoffee.com</a> or find <a href="https://www.linkedin.com/in/nicksuch/">Nick on LinkedIn</a>.</p>
     <p>© 2026 Claude &amp; Coffee</p>
   </footer>
   <!-- FOOTER: END -->
