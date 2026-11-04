@@ -1,6 +1,6 @@
 # Claude & Coffee — Website Spec
 
-A small, single-page marketing site for Claude & Coffee, a recurring community meetup in Lexington, KY for people using Claude. Hosted on GitHub Pages. Plain HTML and CSS, no build step, no framework.
+A small, single-page marketing site for Claude & Coffee, a recurring community meetup in Lexington, KY for people using AI tools of any kind (Claude, ChatGPT, Gemini, and more). The name is Claude & Coffee, but the content is platform-neutral. Hosted on GitHub Pages. Plain HTML and CSS, no build step, no framework.
 
 ## Goals
 
@@ -11,7 +11,7 @@ A small, single-page marketing site for Claude & Coffee, a recurring community m
 
 ## Audience
 
-Lexington-area business leaders, builders, and curious professionals who use Claude (or want to). Mostly found via LinkedIn shares, word of mouth, and the 210 Leaders / Awesome Inc network, so the page will usually be opened on a phone from a shared link.
+Lexington-area business leaders, builders, and curious professionals who use AI tools (or want to). Mostly found via LinkedIn shares, word of mouth, and the 210 Leaders / Awesome Inc network, so the page will usually be opened on a phone from a shared link.
 
 ## Meetup facts (current)
 
@@ -43,7 +43,7 @@ Lexington-area business leaders, builders, and curious professionals who use Cla
 Wordmark "Claude & Coffee" set in the display face, plus a single "Get notified" link that jumps to the signup section. No other nav.
 
 ### 2. Hero + next meetup (the signature element)
-A one-line description beside or above the next-meetup card, e.g. "A twice-monthly morning meetup in Lexington for people putting Claude to work."
+A one-line description beside or above the next-meetup card, e.g. "A twice-monthly morning meetup in Lexington for people putting AI to work."
 
 The next-meetup card is styled like a café menu board: espresso-brown background, cream lettering, a slightly inset border like a framed chalkboard. This is the one bold visual moment on the page; everything else stays quiet. Contents:
 
@@ -56,7 +56,7 @@ The next-meetup card is styled like a café menu board: espresso-brown backgroun
 Below the card, one quiet line: "We meet the first and third Friday of every month, alternating between Manchester Coffee Co. and Awesome Inc."
 
 ### 3. What happens at a meetup
-Two to three short sentences, no cards. Suggested copy: "Grab a coffee, meet people working with Claude, and see what's actually working. Most sessions include a short demo or topic from a guest host, then open conversation and Q&A. Come with a question, a win, or just curiosity."
+Three short paragraphs, no cards. Copy: (1) "Claude & Coffee is an informal, unconference-style event: attendees show up with topic ideas for discussion, we put them on post-its on a board, and quickly plan the morning." (2) "Great sessions include: show-and-tell (how people are actually using AI), helpdesk (here's where I'm stuck, ask the group for help), presentations from domain experts (unique challenges or solutions in my industry/occupation), and regular old discussions. We have room for parallel sessions when the room is big enough. Present, ask questions, or just listen." (3) "The group is open to anyone — students and professionals, poets and quants, veterans who've lived through an AI winter or novices just starting to experiment with ChatGPT."
 
 ### 4. Get notified (signup)
 Heading: "Get notified about upcoming meetups"

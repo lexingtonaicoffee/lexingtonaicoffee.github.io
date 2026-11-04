@@ -1,6 +1,6 @@
 # Claude & Coffee
 
-Website for Claude & Coffee, a community meetup in Lexington, KY for people using Claude. It meets the first and third Friday of every month, 9:30–11:00 AM.
+Website for Claude & Coffee, a community meetup in Lexington, KY for people using AI tools of any kind (Claude, ChatGPT, Gemini, and more). It meets the first and third Friday of every month, 9:30–11:00 AM.
 
 It's a single static page (`index.html` + `styles.css`) hosted on GitHub Pages. There is no build step.
 
