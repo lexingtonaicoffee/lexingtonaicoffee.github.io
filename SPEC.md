@@ -64,8 +64,11 @@ Fields: email (required), first name (optional). Button: "Notify me". Success me
 
 **Form backend:** default to a HubSpot form embed so signups land in HubSpot as contacts. Leave clearly marked placeholders for `portalId` and `formId` and a comment explaining where to get them. If HubSpot isn't ready at build time, build the form as a plain HTML form posting to Formspree (`action="https://formspree.io/f/FORM_ID"`) so it can be swapped later. Either way, style the form to match the site rather than using the provider's default styling.
 
+### 4b. Topic voting
+Between "What happens" and signup. Heading: "Vote on topics for the next meetup". Visitors pick up to 3 of 5–10 topics and see live counts. Topics and votes live in a Google Sheet behind an Apps Script web app (`vote-backend/Code.gs`); a small inline script renders the list. One vote per browser per meetup date (localStorage, a soft limit), resetting when the next-meetup date changes. Hidden until the backend is connected. A separate Formspree form lets visitors suggest topics privately; suggestions are never shown publicly.
+
 ### 5. Past meetups
-A simple list, newest first: date, venue, guest hosts or topic. Starts empty; hide the section entirely while empty.
+A simple list, newest first: date, venue, and whatever of these is known: attendee count, guest hosts, key topics, links shared. Starts empty; hide the section entirely while empty.
 
 ### 6. Footer
 - Disclaimer (required, always visible): "Claude & Coffee is an independent community meetup. It is not affiliated with, sponsored by, or endorsed by Anthropic. Claude is a trademark of Anthropic, PBC."
@@ -139,7 +142,7 @@ END:VCALENDAR
 - Responsive to 320px wide
 - Visible keyboard focus states, labeled form inputs
 - Lighthouse accessibility and performance 95+
-- No JavaScript except the form embed (if HubSpot is used)
+- No JavaScript except the form embed (if HubSpot is used) and the small topic-voting script
 
 ## Deployment
 GitHub Pages from the `main` branch, root folder. If a custom domain is chosen, add it to `CNAME` and configure DNS. Enable "Enforce HTTPS."

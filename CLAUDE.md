@@ -5,7 +5,7 @@ Static marketing site for the Claude & Coffee meetup in Lexington, KY. Plain HTM
 ## Ground rules
 
 - No frameworks, build tools, or package managers. Plain `index.html` + `styles.css`.
-- No JavaScript except the signup form embed.
+- No JavaScript except the signup form embed and the small topic-voting script at the bottom of `index.html` (approved by Nick). Don't add other scripts.
 - The footer disclaimer must always remain on the page, unchanged unless Nick asks: "Claude & Coffee is an independent community meetup. It is not affiliated with, sponsored by, or endorsed by Anthropic. Claude is a trademark of Anthropic, PBC."
 - Never add Anthropic's logo, the Claude spark/starburst mark, or imitations of them.
 - Keep the visual system in `SPEC.md` (palette, Fraunces + Instrument Sans, menu-board card). Don't introduce new colors or fonts without being asked.
@@ -24,6 +24,7 @@ All editable content in `index.html` sits between clearly labeled comment blocks
 
 - `<!-- NEXT MEETUP: START -->` … `<!-- NEXT MEETUP: END -->`
 - `<!-- PAST MEETUPS: START -->` … `<!-- PAST MEETUPS: END -->`
+- `<!-- TOPIC VOTING: START -->` … `<!-- TOPIC VOTING: END -->`
 - `<!-- SIGNUP FORM: START -->` … `<!-- SIGNUP FORM: END -->`
 - `<!-- FOOTER: START -->` … `<!-- FOOTER: END -->`
 
@@ -33,7 +34,7 @@ Keep these markers in place.
 
 When Nick says something like "next meetup is Nov 6 at Awesome Inc, guest host is Jane Doe":
 
-1. **Archive the current one.** Add the current next meetup to the top of the Past Meetups list (date, venue, guest hosts/topic). Unhide the section if it was hidden.
+1. **Archive the current one.** Add the current next meetup to the top of the Past Meetups list (date, venue, guest hosts). Unhide the section if it was hidden. Ask Nick for anything he hasn't given: attendee count, key topics discussed, and links shared. Include only what he provides; never invent numbers or links. Use the item format in the comment inside the PAST MEETUPS block.
 2. **Update the card** in the NEXT MEETUP block: date, time, venue name, address, directions link, guest hosts. If there are no guest hosts, remove the hosts row entirely (don't leave it empty).
 3. **Regenerate `next-meetup.ics`** with the same details. Use UTC times:
    - Daylight time (second Sunday in March to first Sunday in November): Eastern = UTC−4, so 9:30–11:00 AM = `13:30–15:00Z`.
@@ -44,6 +45,14 @@ When Nick says something like "next meetup is Nov 6 at Awesome Inc, guest host i
 6. Commit with a message like `Next meetup: Nov 6 at Awesome Inc`.
 
 If Nick only gives a date, assume 9:30–11:00 AM and ask which venue if it isn't stated.
+
+## Topic voting
+
+- Voting is JS (inline script at the bottom of `index.html`) backed by a Google Sheet + Apps Script web app. Backend code and setup steps are in `vote-backend/Code.gs`; it isn't served by the site.
+- The section stays hidden until `VOTE_URL` in the script is set and the Sheet's Topics tab has active topics. Topics and counts live in the Sheet, so changing topics never needs a site deploy.
+- Votes are keyed to the date in the NEXT MEETUP card's `<time datetime>`, so updating the card automatically starts a fresh vote. Browsers remember a vote per event date in localStorage (a soft limit only).
+- Topic suggestions post to Formspree (inbox only, never shown publicly). That block stays hidden until its `FORM_ID` is replaced.
+- Never add a way for visitors to publish topics directly.
 
 ## Signup form
 

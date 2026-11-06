@@ -133,6 +133,47 @@
       <p>The group is open to anyone — students and professionals, poets and quants, veterans who’ve lived through an AI winter or novices just starting to experiment with ChatGPT.</p>
     </section>
 
+    <!-- TOPIC VOTING: START -->
+    <!--
+      Hidden until connected. The script at the bottom of this page reveals this section
+      once VOTE_URL is set (see vote-backend/Code.gs for setup) and the Google Sheet has at
+      least one active topic. Topics and counts live in the Sheet, not here. Votes are keyed
+      to the date in the NEXT MEETUP card, so they reset automatically when the card changes.
+
+      The suggestion form (plain HTML, no JS) posts to Formspree and stays hidden until
+      FORM_ID below is replaced with a real Formspree form ID. Suggestions go to Nick's
+      inbox only; nothing submitted here appears on the site.
+    -->
+    <section id="vote" class="vote wrap" aria-labelledby="vote-heading" hidden>
+      <h2 id="vote-heading">Vote on topics for the next meetup</h2>
+      <p>Pick up to 3 you’d like to see on the board. We’ll use the results to help plan the morning, and you can still bring your own topic on the day.</p>
+      <form id="vote-form" class="vote-form">
+        <fieldset id="vote-options" class="vote-options">
+          <legend class="visually-hidden">Topics (choose up to 3)</legend>
+        </fieldset>
+        <button id="vote-submit" class="button" type="submit" disabled>Cast votes</button>
+        <p id="vote-status" class="vote-status" role="status"></p>
+      </form>
+
+      <div id="suggest" class="suggest" hidden>
+        <h3>Have a topic we missed?</h3>
+        <p>Send it our way. We review suggestions before anything is added to the list.</p>
+        <form class="signup-form" action="https://formspree.io/f/FORM_ID" method="POST">
+          <div class="field">
+            <label for="suggest-topic">Topic idea</label>
+            <input id="suggest-topic" name="topic" type="text" maxlength="140" required>
+          </div>
+          <div class="field">
+            <label for="suggest-email">Email <span class="optional">(optional, if you’d like a reply)</span></label>
+            <input id="suggest-email" name="email" type="email" autocomplete="email">
+          </div>
+          <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="button" type="submit">Suggest a topic</button>
+        </form>
+      </div>
+    </section>
+    <!-- TOPIC VOTING: END -->
+
     <!-- SIGNUP FORM: START -->
     <!--
       Currently a plain HTML form posting to Formspree (no JavaScript).
@@ -175,8 +216,16 @@
     <!-- PAST MEETUPS: START -->
     <!--
       Newest first. Remove the "hidden" attribute once the first item is added.
+      Only include the lines you have; omit attendees, topics, or links when unknown.
       Item format:
-      <li><span class="past-date">Friday, October 16, 2026</span> · Manchester Coffee Co. · Guest hosts: Keith McMunn &amp; Jason Mize, Stellar TechWorks</li>
+      <li>
+        <p><span class="past-date">Friday, October 16, 2026</span> · Manchester Coffee Co.</p>
+        <p class="past-meta">14 attendees · Guest hosts: Keith McMunn &amp; Jason Mize, Stellar TechWorks</p>
+        <p class="past-label">Topics</p>
+        <ul class="past-topics"><li>Topic one</li><li>Topic two</li></ul>
+        <p class="past-label">Links shared</p>
+        <ul class="past-links"><li><a href="https://example.com">Link title</a></li></ul>
+      </li>
     -->
     <section id="past" class="past wrap" aria-labelledby="past-heading" hidden>
       <h2 id="past-heading">Past meetups</h2>
@@ -194,5 +243,119 @@
     <p>© 2026 Claude &amp; Coffee</p>
   </footer>
   <!-- FOOTER: END -->
+
+  <!-- VOTING SCRIPT: the only JavaScript on the site besides any signup embed. -->
+  <script>
+  (function () {
+    // Paste the Apps Script web app URL here (see vote-backend/Code.gs). Empty = voting stays hidden.
+    var VOTE_URL = "";
+    var MAX_VOTES = 3;
+
+    var section = document.getElementById("vote");
+    var dateEl = document.querySelector(".board-date time");
+    if (!VOTE_URL || !section || !dateEl) return;
+
+    var eventId = dateEl.getAttribute("datetime").slice(0, 10);
+    var storeKey = "cc-voted-" + eventId;
+    var form = document.getElementById("vote-form");
+    var options = document.getElementById("vote-options");
+    var submit = document.getElementById("vote-submit");
+    var status = document.getElementById("vote-status");
+    var suggest = document.getElementById("suggest");
+
+    function getVoted() {
+      try { return JSON.parse(localStorage.getItem(storeKey)) || null; } catch (e) { return null; }
+    }
+    function setVoted(ids) {
+      try { localStorage.setItem(storeKey, JSON.stringify(ids)); } catch (e) {}
+    }
+    function el(tag, className, text) {
+      var n = document.createElement(tag);
+      if (className) n.className = className;
+      if (text != null) n.textContent = text;
+      return n;
+    }
+
+    function render(topics) {
+      var voted = getVoted();
+      var total = 0;
+      topics.forEach(function (t) { total = Math.max(total, t.votes); });
+      options.querySelectorAll(".vote-option").forEach(function (n) { n.remove(); });
+
+      topics.forEach(function (t) {
+        var label = el("label", "vote-option");
+        var box = el("input");
+        box.type = "checkbox";
+        box.value = t.id;
+        box.name = "topic";
+        if (voted) { box.disabled = true; box.checked = voted.indexOf(t.id) !== -1; }
+        label.appendChild(box);
+        label.appendChild(el("span", "vote-label", t.label));
+        label.appendChild(el("span", "vote-count", t.votes + (t.votes === 1 ? " vote" : " votes")));
+        var bar = el("span", "vote-bar");
+        bar.setAttribute("aria-hidden", "true");
+        var fill = el("span");
+        fill.style.width = (total ? Math.round((t.votes / total) * 100) : 0) + "%";
+        bar.appendChild(fill);
+        label.appendChild(bar);
+        options.appendChild(label);
+      });
+
+      if (voted) {
+        submit.hidden = true;
+        status.textContent = "Thanks, your votes are in. Come back for the next meetup’s topics.";
+      } else {
+        submit.hidden = false;
+        update();
+      }
+    }
+
+    function update() {
+      var boxes = options.querySelectorAll("input");
+      var checked = options.querySelectorAll("input:checked").length;
+      boxes.forEach(function (b) { b.disabled = !b.checked && checked >= MAX_VOTES; });
+      submit.disabled = checked === 0;
+    }
+
+    function load() {
+      return fetch(VOTE_URL + "?event=" + encodeURIComponent(eventId))
+        .then(function (r) { return r.json(); });
+    }
+
+    options.addEventListener("change", update);
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var ids = Array.prototype.map.call(options.querySelectorAll("input:checked"), function (b) { return b.value; });
+      if (!ids.length || getVoted()) return;
+      submit.disabled = true;
+      status.textContent = "Sending…";
+      fetch(VOTE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ event: eventId, topics: ids })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (!data.ok) throw new Error(data.error || "failed");
+          setVoted(ids);
+          render(data.topics);
+        })
+        .catch(function () {
+          status.textContent = "Sorry, that didn’t go through. Please try again in a moment.";
+          update();
+        });
+    });
+
+    load().then(function (data) {
+      if (!data || !data.topics || !data.topics.length) return;
+      render(data.topics);
+      section.hidden = false;
+      if (suggest && suggest.querySelector("form").getAttribute("action").indexOf("FORM_ID") === -1) {
+        suggest.hidden = false;
+      }
+    }).catch(function () { /* leave the section hidden if the backend is unreachable */ });
+  })();
+  </script>
 </body>
 </html>
