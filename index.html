@@ -156,16 +156,16 @@
       </form>
 
       <div id="suggest" class="suggest" hidden>
-        <h3>Have a topic we missed?</h3>
-        <p>Send it our way. We review suggestions before anything is added to the list.</p>
+        <h3>Suggest a topic</h3>
+        <p>Something else you want to share or discuss? Submit it here. We review suggestions before anything is added to the list.</p>
         <form class="signup-form" action="https://formspree.io/f/mdegnnva" method="POST">
           <div class="field">
             <label for="suggest-topic">Topic idea</label>
             <input id="suggest-topic" name="topic" type="text" maxlength="140" required>
           </div>
           <div class="field">
-            <label for="suggest-email">Email <span class="optional">(optional, if you’d like a reply)</span></label>
-            <input id="suggest-email" name="email" type="email" autocomplete="email">
+            <label for="suggest-email">Email</label>
+            <input id="suggest-email" name="email" type="email" autocomplete="email" required>
           </div>
           <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button class="button" type="submit">Suggest a topic</button>
