@@ -114,6 +114,45 @@
       <p class="schedule-note">We meet the first and third Friday of every month, alternating between Manchester Coffee Co. and Awesome Inc.</p>
     </section>
 
+    <!-- SIGNUP FORM: START -->
+    <!--
+      Currently a plain HTML form posting to Formspree (no JavaScript).
+      To activate: create a form at https://formspree.io, then replace FORM_ID in the
+      action URL below with the ID it gives you (the part after /f/).
+
+      Success message: Formspree shows its own thank-you page by default. On a plan that
+      allows custom redirects, uncomment the _next field and point it at this site's
+      /#thanks URL; the "You're on the list" message below appears when that anchor is targeted.
+
+      Switching to HubSpot later: in HubSpot go to Marketing → Forms, open the form, and
+      use Share → Embed code. portalId and formId are in that snippet (or in the form's URL:
+      .../forms/{portalId}/editor/{formId}). Either embed HubSpot's script with those IDs,
+      or keep this markup and change the action to
+      https://forms.hubspot.com/uploads/form/v2/{portalId}/{formId}
+      Keep the site's own field and button styling either way.
+
+      Hidden until the form has an ID: remove "hidden" from this section and from the
+      "Get notified" link in the header.
+    -->
+    <section id="signup" class="signup wrap" aria-labelledby="signup-heading">
+      <h2 id="signup-heading">Get notified about upcoming meetups</h2>
+      <p id="thanks" class="signup-thanks" role="status">You’re on the list. See you at the next one.</p>
+      <form class="signup-form" action="https://formspree.io/f/myewggqp" method="POST">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="first-name">First name <span class="optional">(optional)</span></label>
+          <input id="first-name" name="first_name" type="text" autocomplete="given-name">
+        </div>
+        <!-- <input type="hidden" name="_next" value="https://lexingtonaicoffee.com/#thanks"> -->
+        <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="button" type="submit">Notify me</button>
+      </form>
+    </section>
+    <!-- SIGNUP FORM: END -->
+
     <section class="about wrap" aria-labelledby="why-heading">
       <h2 id="why-heading">Why this exists</h2>
       <p>Claude &amp; Coffee exists to connect people in the Lexington metro area with peer support in learning to use AI.</p>
@@ -173,45 +212,6 @@
       </div>
     </section>
     <!-- TOPIC VOTING: END -->
-
-    <!-- SIGNUP FORM: START -->
-    <!--
-      Currently a plain HTML form posting to Formspree (no JavaScript).
-      To activate: create a form at https://formspree.io, then replace FORM_ID in the
-      action URL below with the ID it gives you (the part after /f/).
-
-      Success message: Formspree shows its own thank-you page by default. On a plan that
-      allows custom redirects, uncomment the _next field and point it at this site's
-      /#thanks URL; the "You're on the list" message below appears when that anchor is targeted.
-
-      Switching to HubSpot later: in HubSpot go to Marketing → Forms, open the form, and
-      use Share → Embed code. portalId and formId are in that snippet (or in the form's URL:
-      .../forms/{portalId}/editor/{formId}). Either embed HubSpot's script with those IDs,
-      or keep this markup and change the action to
-      https://forms.hubspot.com/uploads/form/v2/{portalId}/{formId}
-      Keep the site's own field and button styling either way.
-
-      Hidden until the form has an ID: remove "hidden" from this section and from the
-      "Get notified" link in the header.
-    -->
-    <section id="signup" class="signup wrap" aria-labelledby="signup-heading">
-      <h2 id="signup-heading">Get notified about upcoming meetups</h2>
-      <p id="thanks" class="signup-thanks" role="status">You’re on the list. See you at the next one.</p>
-      <form class="signup-form" action="https://formspree.io/f/myewggqp" method="POST">
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" autocomplete="email" required>
-        </div>
-        <div class="field">
-          <label for="first-name">First name <span class="optional">(optional)</span></label>
-          <input id="first-name" name="first_name" type="text" autocomplete="given-name">
-        </div>
-        <!-- <input type="hidden" name="_next" value="https://lexingtonaicoffee.com/#thanks"> -->
-        <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <button class="button" type="submit">Notify me</button>
-      </form>
-    </section>
-    <!-- SIGNUP FORM: END -->
 
     <!-- PAST MEETUPS: START -->
     <!--
